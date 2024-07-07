@@ -12,6 +12,7 @@ services:
       - 4306:3306
     volumes:
       - mysql-db:/var/lib/mysql
+
   backend:
     tty: true
     depends_on:
@@ -23,7 +24,8 @@ services:
       - 3000:3000
     volumes:
       - ./backend:/app
-    command: rails server -b 0.0.0.0
+    command: bash -c "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0"
+
   frontend:
     build:
       context: ./frontend/
@@ -32,7 +34,17 @@ services:
       - ./frontend/app:/usr/src/app
     command: 'yarn dev'
     ports:
-      - '8000:3000'
+      - '4000:4000'
+
+  nginx:
+    build:
+      context: ./infra/nginx/
+      dockerfile: Dockerfile
+    ports:
+      - '9000:80'
+    depends_on:
+      - frontend
+
 volumes:
   mysql-db:
     driver: local
