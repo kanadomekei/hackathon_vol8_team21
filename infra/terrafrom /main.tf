@@ -29,7 +29,7 @@ module "instances" {
   source = "./modules/instances"
   ami = var.ami
   instance_type = var.instance_type
-  key_name = module.key_pair.key_name  // 修正
+  key_name = module.key_pair.key_name  
   subnet1_id = module.subnets.subnet1_id
   subnet2_id = module.subnets.subnet2_id
   security_group_id = module.security_groups.web_sg_id
