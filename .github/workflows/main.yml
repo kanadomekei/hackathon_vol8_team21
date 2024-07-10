@@ -1,20 +1,35 @@
-name: Dev Branch Notification
+name: EC2ログインテスト
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
   pull_request:
-    types: [closed]
-    branches: [ "dev" ]
+    branches: [ "main" ]
 
 jobs:
-  notify:
+  login:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Check if pull request was merged
-        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-        run: echo "プルリクエストがdevブランチにマージされました。"
+    - name: AWSの認証情報を設定
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-1
 
-      - name: Notify push to dev
-        if: github.event_name == 'push'
-        run: echo "devブランチにプッシュされました。"
+    - name: EC2インスタンスにSSH接続
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: ${{ secrets.EC2_USER }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        echo "EC2インスタンスへの接続を試みています..."
+        if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i private_key ${USER}@${HOST} echo "EC2インスタンスに接続成功"; then
+          echo "接続に成功しました。"
+        else
+          echo "接続に失敗しました。"
+          exit 1
+        fi
+        rm private_key
