@@ -12,7 +12,7 @@ services:
       - 4306:3306
     volumes:
       - mysql-db:/var/lib/mysql
-
+      
   backend:
     tty: true
     depends_on:
