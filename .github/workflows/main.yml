@@ -1,9 +1,20 @@
+name: Dev Branch Notification
+
+on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "main", "dev" ]
-# ... existing code ...
-      # Runs a single command using the runners shell
-      - name: Notify push or pull request to dev
-        if: github.ref == 'refs/heads/dev'
-        run: echo "Pushed or pull request to dev branch"
+    types: [closed]
+    branches: [ "dev" ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if pull request was merged
+        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+        run: echo "プルリクエストがdevブランチにマージされました。"
+
+      - name: Notify push to dev
+        if: github.event_name == 'push'
+        run: echo "devブランチにプッシュされました。"
