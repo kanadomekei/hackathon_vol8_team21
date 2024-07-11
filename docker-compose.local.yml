@@ -32,6 +32,8 @@ services:
       dockerfile: infra/dockerfiles/local/frontend.Dockerfile
     volumes:
       - ./frontend/app:/app
+    networks:
+      - app-network
     ports:
       - '4000:4000'
 
@@ -41,9 +43,16 @@ services:
       dockerfile: infra/dockerfiles/local/nginx.Dockerfile
     ports:
       - '80:80'
+    networks:
+      - app-network
+    restart: always
     depends_on:
       - frontend
 
 volumes:
   mysql-db:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge
