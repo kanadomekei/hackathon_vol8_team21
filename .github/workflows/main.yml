@@ -29,5 +29,11 @@ jobs:
           echo "EC2インスタンスに接続成功"
           git clone https://github.com/kanadomekei/hackathon_vol8_team21.git
           echo "リポジトリのクローンが完了しました。"
+          cd hackathon_vol8_team21/
+          git pull 
+          cd frontend
+          npm install
+          cd ..
+          docker compose -f docker-compose.local.yml up --build -d
         EOF
         rm private_key
