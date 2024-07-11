@@ -18,8 +18,8 @@ services:
     depends_on:
       - db
     build:
-      context: ./
-      dockerfile: infra/dockerfiles/backend.Dockerfile
+      context: ./ 
+      dockerfile: infra/dockerfiles/local/backend.Dockerfile
     ports:
       - 3000:3000
     volumes:
@@ -29,7 +29,7 @@ services:
   frontend:
     build:
       context: ./
-      dockerfile: infra/dockerfiles/frontend.Dockerfile
+      dockerfile: infra/dockerfiles/local/frontend.Dockerfile
     volumes:
       - ./frontend/app:/usr/src/app
     command: 'yarn dev'
@@ -39,7 +39,7 @@ services:
   nginx:
     build:
       context: ./
-      dockerfile: infra/dockerfiles/nginx.Dockerfile
+      dockerfile: infra/dockerfiles/local/nginx.Dockerfile
     ports:
       - '80:80'
     depends_on:
