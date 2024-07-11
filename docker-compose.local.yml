@@ -31,8 +31,7 @@ services:
       context: ./
       dockerfile: infra/dockerfiles/local/frontend.Dockerfile
     volumes:
-      - ./frontend/app:/usr/src/app
-    command: 'yarn dev'
+      - ./frontend/app:/app
     ports:
       - '4000:4000'
 
