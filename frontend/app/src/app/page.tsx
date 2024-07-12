@@ -1,33 +1,16 @@
-import { FC } from 'react';
+import Link from "next/link";
 
-type Post = {
-  id: number;
-  title: string;
-};
-
-async function getPost() {
-  const res = await fetch('http://backend:3000/posts');
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch Post');
-  }
-
-  return res.json();
-}
-
-const Home: FC = async () => {
-  const posts: Post[] = await getPost();
-
+export default function Home() {
   return (
-    <div className="m-4">
-      <h1 className="text-4xl mb-4 underline">Post List</h1>
-      {posts.map((post) => (
-        <p className="mb-1" key={post.id}>
-          {post.title}
-        </p>
-      ))}
+   
+   <div　className="mx-auto text-center mt-10">
+    <h1 className="my-10 mt-15 text-3xl">IT用語単語帳アプリ</h1>
+    <div className="bg-gray-300 py-14 my-24 mx-24 rounded-2xl">
+      <Link href={'/pages/select-question'}>クイズを始める</Link>
     </div>
+    <div className="bg-gray-300 py-14 my-24 mx-24 rounded-2xl">
+      <Link href={'word-list'}>単語リスト</Link>
+    </div>
+   </div>
   );
-};
-
-export default Home;
+}

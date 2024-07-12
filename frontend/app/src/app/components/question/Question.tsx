@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Genre = () => {
+export const Question = () => {
   return (
     <div>
         <div>
@@ -14,4 +14,4 @@ export const Genre = () => {
   )
 }
 
-export default Genre
+export default Question
