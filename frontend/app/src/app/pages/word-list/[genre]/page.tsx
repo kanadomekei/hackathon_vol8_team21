@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type WordData = {
   id: string;
@@ -41,19 +41,29 @@ export default function GenreWordList({ params }: Props) {
     fetchData();
   }, [params.genre]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (data.length === 0) return <p>No data available for this genre.</p>;
+  if (loading) return <p className="text-center p-4">Loading...</p>;
+  if (error) return <p className="text-center p-4 text-red-500">Error: {error}</p>;
+  if (data.length === 0) return <p className="text-center p-4">No data available for this genre.</p>;
 
   return (
-    <div>
-      <h1>{params.genre} Word List</h1>
-      {data.map((item) => (
-        <div key={item.id}>
-          <h2>{item.word_term} ({item.word_definition})</h2>
-          <p><strong>説明:</strong> {item.word_explanation}</p>
-        </div>
-      ))}
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">単語リスト</h1>
+      <table className="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="w-1/2 py-2 px-4 border-b text-left">用語</th>
+            <th className="w-1/2 py-2 px-4 border-b text-left">説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+              <td className="py-2 px-4 border-b">{item.word_term}</td>
+              <td className="py-2 px-4 border-b">{item.word_explanation}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
