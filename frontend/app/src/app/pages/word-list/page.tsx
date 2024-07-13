@@ -1,42 +1,46 @@
 'use client'
+import Link from 'next/link';
 import React from 'react';
 
-const GenreSelectionPreview: React.FC = () => {
-  // ジャンルのリストを定義
-  const genres: string[] = ['ジャンル1', 'ジャンル2', 'ジャンル3', 'ジャンル4', 'ジャンル5', 'ジャンル6', 'ジャンル7'];
+type Genre = {
+  id: number;
+  name: string;
+};
 
-  // ジャンルボタンがクリックされたときの処理
-  const handleGenreClick = (genre: string) => {
-    console.log(`選択されたジャンル: ${genre}`);
-    // ここに選択後の処理を追加
-  };
+const GenreSelectionPage: React.FC = () => {
+  const genreDataList: Genre[] = [
+    { id: 1, name: 'ジャンル1' },
+    { id: 2, name: 'ジャンル2' },
+    { id: 3, name: 'ジャンル3' },
+    { id: 4, name: 'ジャンル4' },
+    { id: 5, name: 'ジャンル5' },
+    { id: 6, name: 'ジャンル6' },
+    { id: 7, name: 'ジャンル7' },
+  ];
 
   return (
     <div style={styles.body}>
       <div style={styles.container}>
         <h1 style={styles.title}>ジャンルを選択</h1>
-        {genres.map((genre, index) => (
-          <button
-            key={index}
-            style={styles.genreButton}
-            onClick={() => handleGenreClick(genre)}
-          >
-            {genre}
-          </button>
+        {genreDataList.map((genre) => (
+          <Link href={`/pages/word-question/${genre.id}`} key={genre.id} style={styles.link}>
+            <button style={styles.genreButton}>
+              {genre.name}
+            </button>
+          </Link>
         ))}
       </div>
     </div>
   );
 };
 
-// スタイルを定義
 const styles = {
   body: {
     fontFamily: 'Arial, sans-serif',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
+    minHeight: '100vh',
     margin: 0,
     backgroundColor: '#f5f5f5',
   },
@@ -44,7 +48,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center',
-    width: '300px',
+    width: '90%',
+    maxWidth: '400px',
     padding: '20px',
     backgroundColor: 'white',
     borderRadius: '10px',
@@ -53,6 +58,10 @@ const styles = {
   title: {
     fontSize: '24px',
     marginBottom: '20px',
+  },
+  link: {
+    width: '100%',
+    textDecoration: 'none',
   },
   genreButton: {
     width: '100%',
@@ -63,10 +72,8 @@ const styles = {
     border: '1px solid #ddd',
     borderRadius: '5px',
     cursor: 'pointer',
-    ':hover': {
-      backgroundColor: '#f0f0f0',
-    },
-  } as React.CSSProperties,
+    textAlign: 'center' as const,
+  },
 };
 
-export default GenreSelectionPreview;
+export default GenreSelectionPage;
