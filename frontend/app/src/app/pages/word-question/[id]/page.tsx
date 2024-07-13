@@ -1,5 +1,25 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Question from '../../genre/question/page';
+
+type WordQestion = {
+  id: number;
+  genre_id: number;
+  trem: string;
+  definition: string;
+  explanation: string;
+};
+
+const WordPage: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [knownWords, setKnownWords] = useState<WordQestion[]>([]);
+  const [unknownWords, setUnknownWords] = useState<WordQestion[]>([]);
+  const router = useRouter();
+
+  const words: WordQestion[] = [
+
 import React, { useState } from 'react';
 
 type WordQuestion = {
@@ -20,6 +40,44 @@ const genreDataList: WordQuestion[] = [
     { id: 7, genre_id: 7, trem: 'trem 1C', definition: 'definition 1C', explanation: 'explanation 1C' },
     { id: 8, genre_id: 8, trem: 'trem 2C', definition: 'definition 2C', explanation: 'explanation 2C' },
     { id: 9, genre_id: 9, trem: 'trem 3C', definition: 'definition 3C', explanation: 'explanation 3C' }
+  ];
+
+  useEffect(() => {
+    if (currentIndex >= words.length) {
+      localStorage.setItem('knownWords', JSON.stringify(knownWords));
+      localStorage.setItem('unknownWords', JSON.stringify(unknownWords));
+      router.push('/pages/check-result');
+    }
+  }, [currentIndex, knownWords, unknownWords, router]);
+
+  const handleKnown = () => {
+    setKnownWords([...knownWords, words[currentIndex]]);
+    setCurrentIndex(currentIndex + 1);
+  };
+
+  const handleUnknown = () => {
+    setUnknownWords([...unknownWords, words[currentIndex]]);
+    setCurrentIndex(currentIndex + 1);
+  };
+
+  return (
+       <div className="flex flex-col items-center justify-between">
+        <div className='my-24'>
+      {words[currentIndex] ? (
+        <Question question={words[currentIndex]} />
+      ) : (
+        <div>Loading...</div>
+      )}
+        </div>
+      <div className="flex justify-around w-full py-16 border-t">
+        <button onClick={handleKnown} className="bg-gray-300 rounded-full px-4 py-4">知ってる</button>
+        <button onClick={handleUnknown} className="bg-gray-300 rounded-full px-4 py-4">知らない</button>
+      </div>
+    </div>
+  );
+};
+
+export default WordPage;
 ];
 
 export default function Page() {
