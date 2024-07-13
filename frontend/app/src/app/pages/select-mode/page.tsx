@@ -15,9 +15,9 @@ export const Select = () => {
 
   const handleStart = () => {
     if (select) {
-      router.push('/pages/question');
+      router.push('/pages/select-mode/quiz');
     } else {
-      router.push('/pages/word-check');
+      router.push('/pages/select-mode/card');
     }
   };
 
