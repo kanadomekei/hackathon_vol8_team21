@@ -7,12 +7,16 @@ class ApiController < ApplicationController
     @genres = CombinedData.all
     render json: @genres
   end
+  def genreldwords
+    @genres = CombinedData.where(genres_term: params[:genreld])
+    render json: @genres
+  end
   def questions
     @genres = CombinedData.all
     render json: @genres 
   end
-  def show
-    @genres = CombinedData.all
-    render json: @genres 
+  def genreldquestions
+    @genres = CombinedData.where(genres_term: params[:genreld])
+    render json: @genres
   end
 end

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   get "/api/genres" => "api#genres"
   get "/api/words" => "api#words"
+  get "/api/genres/:genreld/words" => "api#genreldwords"
   get "/api/questions" => "api#questions"
-  get "/api/questions/:id" => "api#show"
+  get "/api/questions/:id" => "api#genreldquestions"
 end
