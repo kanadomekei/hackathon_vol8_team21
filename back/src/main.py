@@ -64,7 +64,7 @@ def get_quiz(genre: str, num_questions: int):
     file_path = os.path.join(os.path.dirname(__file__), "data.tsv")
     try:
         data = read_tsv(file_path)
-        quiz = generate_quiz_with_limit(data, genre, num_questions)
+        quiz = generate_quiz(data, genre, num_questions)
         return quiz
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Data file not found")
