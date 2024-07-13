@@ -37,11 +37,11 @@ const GenreSelectionPage = () => {
         <h1 className="text-3xl font-bold mb-6 text-center">ジャンルを選択</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {genreDataList.map((genre) => (
-            <Link href={`/pages/word-check/word-question/Software`} key={genre.id} className="block">
-              <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                {genre.name}
-              </button>
-            </Link>
+            <Link href={`/pages/word-check/word-question/${genre.name}`} key={genre.id} className="block">
+            <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+              {genre.name}
+            </button>
+          </Link>
           ))}
         </div>
       </div>
