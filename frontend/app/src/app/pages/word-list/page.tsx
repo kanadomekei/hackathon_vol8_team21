@@ -1,4 +1,5 @@
 'use client'
+import { headers } from 'next/headers';
 import Link from 'next/link';
 import React from 'react';
 
@@ -20,6 +21,9 @@ const GenreSelectionPage: React.FC = () => {
 
   return (
     <div style={styles.body}>
+      <header style={styles.header}>
+        <h2 style={styles.headerText}>ITwords</h2>
+      </header>
       <div style={styles.container}>
         <h1 style={styles.title}>ジャンルを選択</h1>
         {genreDataList.map((genre) => (
@@ -42,22 +46,38 @@ const styles = {
     alignItems: 'center',
     minHeight: '100vh',
     margin: 0,
+    backgroundColor: '#ffffff',
+    paddingTop: '50px', // ヘッダーの高さを考慮して追加
+  },
+  header: {
+    position: 'fixed' as const,
+    top: 0,
+    left: 0,
+    width: '100%',
     backgroundColor: '#f5f5f5',
+    padding: '10px',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+  },
+  headerText: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    margin: 0,
+    padding: '0 20px',
   },
   container: {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center',
-    width: '90%',
-    maxWidth: '400px',
-    padding: '20px',
+    width: '100%',
+    maxWidth: '1800px',
+    padding: '100px',
     backgroundColor: 'white',
     borderRadius: '10px',
     boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
   },
   title: {
-    fontSize: '24px',
-    marginBottom: '20px',
+    fontSize: '40px',
+    marginBottom: '50px',
   },
   link: {
     width: '100%',
@@ -67,8 +87,8 @@ const styles = {
     width: '100%',
     padding: '15px',
     margin: '5px 0',
-    fontSize: '16px',
-    backgroundColor: 'white',
+    fontSize: '30px',
+    backgroundColor: '#f5f5f5',
     border: '1px solid #ddd',
     borderRadius: '5px',
     cursor: 'pointer',
