@@ -1,68 +1,77 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Question from '../../../genre/question/page';
+import { useState, useEffect } from 'react';
 
-type WordQuestion = {
-  id: number;
-  genre_id: number;
-  trem: string;
-  definition: string;
-  explanation: string;
+type WordData = {
+  id: string;
+  genre_term: string;
+  word_term: string;
+  word_definition: string;
+  word_explanation: string;
+  question_content: string;
+  correct_answer: string;
+  difficulty: string;
 };
 
-const genreDataList: WordQuestion[] = [
-  { id: 1, genre_id: 1, trem: 'trem 1A', definition: 'definition 1A', explanation: 'explanation 1A' },
-  { id: 2, genre_id: 2, trem: 'trem 2A', definition: 'definition 2A', explanation: 'explanation 2A' },
-  { id: 3, genre_id: 3, trem: 'trem 3A', definition: 'definition 3A', explanation: 'explanation 3A' },
-  { id: 4, genre_id: 4, trem: 'trem 1B', definition: 'definition 1B', explanation: 'explanation 1B' },
-  { id: 5, genre_id: 5, trem: 'trem 2B', definition: 'definition 2B', explanation: 'explanation 2B' },
-  { id: 6, genre_id: 6, trem: 'trem 3B', definition: 'definition 3B', explanation: 'explanation 3B' },
-  { id: 7, genre_id: 7, trem: 'trem 1C', definition: 'definition 1C', explanation: 'explanation 1C' },
-  { id: 8, genre_id: 8, trem: 'trem 2C', definition: 'definition 2C', explanation: 'explanation 2C' },
-  { id: 9, genre_id: 9, trem: 'trem 3C', definition: 'definition 3C', explanation: 'explanation 3C' }
-];
+type Props = {
+  params: { genre: string };
+};
 
-const WordPage: React.FC = () => {
+export default function GenreWordList({ params }: Props) {
+  const [data, setData] = useState<WordData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [knownWords, setKnownWords] = useState<WordQuestion[]>([]);
-  const [unknownWords, setUnknownWords] = useState<WordQuestion[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
-    if (currentIndex >= genreDataList.length) {
-      localStorage.setItem('knownWords', JSON.stringify(knownWords));
-      localStorage.setItem('unknownWords', JSON.stringify(unknownWords));
-      router.push('/pages/check-result');
-    }
-  }, [currentIndex, knownWords, unknownWords, router]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/data/genre_with_limit/${params.genre}?limit=10`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (e) {
+        setError(e instanceof Error ? e.message : 'An unknown error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleKnown = () => {
-    setKnownWords([...knownWords, genreDataList[currentIndex]]);
-    setCurrentIndex(currentIndex + 1);
+    fetchData();
+  }, [params.genre]);
+
+  const handleNextWord = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
   };
 
-  const handleUnknown = () => {
-    setUnknownWords([...unknownWords, genreDataList[currentIndex]]);
-    setCurrentIndex(currentIndex + 1);
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (data.length === 0) return <p>No data available for this genre.</p>;
+
+  const currentWord = data[currentIndex];
 
   return (
-    <div className="flex flex-col items-center justify-between">
-      <div className='my-24'>
-        {genreDataList[currentIndex] ? (
-          <Question question={genreDataList[currentIndex]} />
-        ) : (
-          <div>Loading...</div>
-        )}
-      </div>
-      <div className="flex justify-around w-full py-16 border-t">
-        <button onClick={handleKnown} className="bg-gray-300 rounded-full px-4 py-4">知ってる</button>
-        <button onClick={handleUnknown} className="bg-gray-300 rounded-full px-4 py-4">知らない</button>
+    <div style={{ textAlign: 'center', padding: '20px' }}>
+      <h1>{params.genre} 単語</h1>
+      <div key={currentWord.id} style={{ marginBottom: '20px' }}>
+        <h2>{currentWord.word_term}</h2>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '20px' }}>
+          <button
+            style={{ padding: '10px 20px', borderRadius: '50%', backgroundColor: '#e0e0e0' }}
+            onClick={handleNextWord}
+          >
+            知ってる
+          </button>
+          <button
+            style={{ padding: '10px 20px', borderRadius: '50%', backgroundColor: '#e0e0e0' }}
+            onClick={handleNextWord}
+          >
+            知らない
+          </button>
+        </div>
       </div>
     </div>
   );
-};
-
-export default WordPage;
+}
