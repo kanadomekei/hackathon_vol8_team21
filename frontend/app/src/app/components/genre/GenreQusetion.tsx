@@ -1,26 +1,34 @@
 import React from 'react'
 
 
-async function getData() {
-  const res = await fetch('https://api.example.com/...')
+// async function getData() {
+
+
+//   const res = await fetch('http://localhost:')
+
   
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  console.log
-  return res.json()
-}
+//   if (!res.ok) {
+//     throw new Error('Failed to fetch data')
+//   }
+//   console.log
+//   return res.json()
+// }
 
-const Genre = async () => {
-  const data = await getData()
-  
-  
+
+type GenreProps = {
+  genre: {
+    id: number;
+    name: string;
+  };
+};
+
+const Genre: React.FC<GenreProps> = ({ genre }) => {
   return (
-    <div>
-      
+    <div className='bg-gray-200 hover:bg-gray-300 py-8 border-t-2 border-black text-center'>
+      <p>{genre.name}</p>
     </div>
-  )
-}
+  );
+};
 
-export default Genre
+export default Genre;
