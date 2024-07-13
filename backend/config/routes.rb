@@ -4,4 +4,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  get "/api/genres" => "api#genres"
+  get "/api/words" => "api#words"
+  get "/api/questions" => "api#questions"
+  get "/api/questions/:id" => "api#show"
 end

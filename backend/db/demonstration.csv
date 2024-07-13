@@ -1,4 +1,4 @@
-Id,genre_term,word_term,word_definition,word_explanation,question_content,correct_answer,difficulty
-0,First,API,Application Programming Interface,ソフトウェアやプログラム、Webサービスの間をつなぐインターフェース,What is API?,Application Programming Interface,1
-1,Second,CUI,Graphical User Interface,ユーザーが視覚的に捉えてできるようにするためのインタフェース,What is CUI?,Graphical User Interface,2
-2,Second,GLI,Command Line Interface,コンピューターソフトウェアやオペレーティングシステムと対話するためのテキストベースのユーザーインターフェース,What is GLI?,Command Line Interface,3
+"Id","genre_term","word_term","word_definition","word_explanation","question_content","correct_answer","difficulty"
+"0","First","API","Application Programming Interface","ソフトウェアやプログラム、Webサービスの間をつなぐインターフェース","What is API?","Application Programming Interface","1"
+"1","Second","CUI","Graphical User Interface","ユーザーが視覚的に捉えてできるようにするためのインタフェース","What is CUI?","Graphical User Interface","2"
+"2","Second","GLI","Command Line Interface","コンピューターソフトウェアやオペレーティングシステムと対話するためのテキストベースのユーザーインターフェース","What is GLI?","Command Line Interface","3"
