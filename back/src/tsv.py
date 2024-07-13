@@ -26,11 +26,12 @@ def generate_quiz(data, genre, num_questions):
         raise ValueError(f"Not enough questions available for genre {genre}")
     
     questions = []
-    for row in random.sample(filtered_rows, num_questions):
+    for idx, row in enumerate(random.sample(filtered_rows, num_questions), start=1):  # IDを追加
         correct_answer = row[2]
         incorrect_answers = random.sample([r[2] for r in filtered_rows if r[2] != correct_answer], 3)
         
         question = {
+            'id': idx,  
             'question_content': row[5],  
             'correct_answer': correct_answer,
             'options': [correct_answer] + incorrect_answers
@@ -39,7 +40,6 @@ def generate_quiz(data, genre, num_questions):
         questions.append(question)
     
     return questions
-
 if __name__ == "__main__":
     file_path = "data.tsv"
     genre = "Software"
