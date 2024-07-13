@@ -1,16 +1,30 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text
+from sqlalchemy import Column, Integer, String, DateTime, Text
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from pydantic import BaseModel
 import datetime
 
 Base = declarative_base()
 
-class User(Base):
-    __tablename__ = "users"
+class Data(Base):
+    __tablename__ = "data"
     id = Column(Integer, primary_key=True)
-    username = Column(String(255), nullable=False)
-    email = Column(String(255), nullable=False, unique=True)
-    password_hash = Column(String(255), nullable=False)
-    profile_image_url = Column(String(255))
-    created_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False, onupdate=datetime.datetime.utcnow)
+    genre_term = Column(String(255), nullable=False)
+    word_term = Column(String(255), nullable=False)
+    word_definition = Column(Text, nullable=False)
+    word_explanation = Column(Text, nullable=False)
+    question_content = Column(Text, nullable=False)
+    correct_answer = Column(String(255), nullable=False)
+    difficulty = Column(Integer, nullable=False)
+
+class DataModel(BaseModel):
+    id: int
+    genre_term: str
+    word_term: str
+    word_definition: str
+    word_explanation: str
+    question_content: str
+    correct_answer: str
+    difficulty: int
+
+    class Config:
+        orm_mode = True

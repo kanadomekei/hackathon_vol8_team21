@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database.database import initialize_data
 
-from .routers.users.user import router as user_router
+from .routers.data.data import router as user_router
 
 app = FastAPI()
 
