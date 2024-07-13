@@ -52,9 +52,6 @@ export default function GenreWordList({ params }: Props) {
         <div key={item.id}>
           <h2>{item.word_term} ({item.word_definition})</h2>
           <p><strong>説明:</strong> {item.word_explanation}</p>
-          <p><strong>問題:</strong> {item.question_content}</p>
-          <p><strong>正解:</strong> {item.correct_answer}</p>
-          <p><strong>難易度:</strong> {item.difficulty}</p>
         </div>
       ))}
     </div>
