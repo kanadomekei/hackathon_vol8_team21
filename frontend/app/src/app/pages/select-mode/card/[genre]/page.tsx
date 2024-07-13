@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 type WordData = {
   id: string;
@@ -17,11 +18,15 @@ type Props = {
   params: { genre: string };
 };
 
-export default function GenreWordList({ params }: Props) {
+export default function IntegratedWordQuiz({ params }: Props) {
   const [data, setData] = useState<WordData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [knownWords, setKnownWords] = useState<WordData[]>([]);
+  const [unknownWords, setUnknownWords] = useState<WordData[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +38,7 @@ export default function GenreWordList({ params }: Props) {
         const result = await response.json();
         setData(result);
       } catch (e) {
+        console.error('Fetch error:', e);
         setError(e instanceof Error ? e.message : 'An unknown error occurred');
       } finally {
         setLoading(false);
@@ -42,34 +48,85 @@ export default function GenreWordList({ params }: Props) {
     fetchData();
   }, [params.genre]);
 
-  const handleNextWord = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+  const handleNextWord = (isKnown: boolean) => {
+    const currentWord = data[currentIndex];
+    if (isKnown) {
+      setKnownWords([...knownWords, currentWord]);
+    } else {
+      setUnknownWords([...unknownWords, currentWord]);
+    }
+
+    if (currentIndex === data.length - 1) {
+      setShowResult(true);
+    } else {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (data.length === 0) return <p>No data available for this genre.</p>;
+  if (loading) return <div className="flex justify-center items-center h-screen">データを読み込んでいます...</div>;
+  if (error) return (
+    <div className="flex flex-col justify-center items-center h-screen text-red-500">
+      <p>エラーが発生しました: {error}</p>
+      <p className="mt-2 text-sm text-gray-600">
+        サーバーが起動しているか、正しいURLを使用しているか確認してください。
+      </p>
+    </div>
+  );
+  if (data.length === 0) return <div className="flex justify-center items-center h-screen">このジャンルのデータはありません。</div>;
+
+  if (showResult) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-center mb-8">結果</h1>
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-2xl font-semibold mb-4">知っている単語</h2>
+          <ul className="mb-8">
+            {knownWords.map(word => (
+              <li key={word.id} className="mb-2">
+                <span className="font-bold">{word.word_term}</span>: {word.word_definition}
+              </li>
+            ))}
+          </ul>
+          <h2 className="text-2xl font-semibold mb-4">知らない単語</h2>
+          <ul>
+            {unknownWords.map(word => (
+              <li key={word.id} className="mb-2">
+                <span className="font-bold">{word.word_term}</span>: {word.word_definition}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    );
+  }
 
   const currentWord = data[currentIndex];
 
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <h1>{params.genre} 単語</h1>
-      <div key={currentWord.id} style={{ marginBottom: '20px' }}>
-        <h2>{currentWord.word_term}</h2>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '20px' }}>
-          <button
-            style={{ padding: '10px 20px', borderRadius: '50%', backgroundColor: '#e0e0e0' }}
-            onClick={handleNextWord}
-          >
-            知ってる
-          </button>
-          <button
-            style={{ padding: '10px 20px', borderRadius: '50%', backgroundColor: '#e0e0e0' }}
-            onClick={handleNextWord}
-          >
-            知らない
-          </button>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-center mb-8">{params.genre} 単語</h1>
+      <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="px-6 py-4">
+          <div className="font-bold text-xl mb-2 text-center">{currentWord.word_term}</div>
+          <div className="text-gray-600 text-center">
+            {currentIndex + 1} / {data.length}
+          </div>
+        </div>
+        <div className="px-6 pt-4 pb-2">
+          <div className="flex justify-center space-x-4 mt-6">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={() => handleNextWord(true)}
+            >
+              知ってる
+            </button>
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={() => handleNextWord(false)}
+            >
+              知らない
+            </button>
+          </div>
         </div>
       </div>
     </div>
