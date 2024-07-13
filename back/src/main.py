@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import os
 from .tsv import read_tsv, get_unique_genre_terms, get_rows_by_genre, generate_quiz
+from typing import List, Dict, Union
 
 app = FastAPI()
 
@@ -21,7 +22,7 @@ def get_data():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-@router.get("/genres", response_model=List[str])
+@router.get("/genres", response_model=List[Dict[str, Union[int, str]]])
 def get_genres():
     file_path = os.path.join(os.path.dirname(__file__), "data.tsv")
     try:
@@ -31,7 +32,7 @@ def get_genres():
         raise HTTPException(status_code=404, detail="Data file not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
-
+    
 @router.get("/data/genre/{genre}", response_model=List[dict])
 def get_data_by_genre(genre: str):
     file_path = os.path.join(os.path.dirname(__file__), "data.tsv")
