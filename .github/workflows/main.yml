@@ -1,10 +1,9 @@
 name: EC2ログインテスト
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
+  workflow_dispatch: # 手動トリガーを追加
 
 jobs:
   login:
@@ -16,7 +15,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-northeast-1
+        aws-region: ap-northeast-1  
 
     - name: EC2インスタンスにSSH接続
       env:
@@ -25,11 +24,16 @@ jobs:
         USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        echo "EC2インスタンスへの接続を試みています..."
-        if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i private_key ${USER}@${HOST} echo "EC2インスタンスに接続成功"; then
-          echo "接続に成功しました。"
-        else
-          echo "接続に失敗しました。"
-          exit 1
-        fi
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << 'EOF'
+          echo "EC2インスタンスに接続成功"
+          git clone https://github.com/kanadomekei/hackathon_vol8_team21.git
+          echo "リポジトリのクローンが完了しました。"
+          cd hackathon_vol8_team21/
+          git pull 
+          cd frontend/app
+          npm install
+          cd ../..
+          docker compose -f docker-compose.local.yml down
+          docker compose -f docker-compose.local.yml up --build -d
+        EOF
         rm private_key

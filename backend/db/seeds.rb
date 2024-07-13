@@ -1,20 +1,18 @@
-Post.create!(
-    [
-      {
-        title: 'Lorem ipsum dolor sit amet.'
-      },
-      {
-        title: 'Id velit nesciunt et adipisci vitae aut eligendi sunt eum minima totam.'
-      },
-      {
-        title: 'Et cumque maiores eos voluptate tempore ut tempora dignissimos et soluta corrupti est nihil beatae.'
-      },
-      {
-        title: 'Et commodi quam non dolorem quia ea cumque distinctio qui exercitationem voluptate cum iusto distinctio vel modi pariatur et doloremque officiis.'
-      },
-      {
-        title: 'In saepe unde sed obcaecati similique quo beatae amet et Quis incidunt eos molestiae nobis et nihil tenetur?'
-      },
-    ]
+require "csv"
+
+CSV.open('db/data.csv','w', :force_quotes => true) do |people|
+  File.foreach("db/data.tsv") {|line| people <<  line.chomp.split(/\t/)}
+end
+
+CSV.foreach("db/data.csv", headers: true) do |row|
+  CombinedData.create(
+    genre_name: row['genre_term'],
+    word_term: row['word_term'],
+    word_definition: row['word_definition'],
+    word_explanation: row['word_explanation'],
+    question_content: row['question_content'],
+    correct_answer: row['correct_answer'],
+    difficulty: row['difficulty']
   )
+end
 
