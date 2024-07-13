@@ -1,25 +1,22 @@
-version: '3.8'
+version: '3.9'
 
 services:
   db:
-    image: mysql:8.0
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    image: kanadome/hackathon_vol8_team21-db:latest
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: sample
       MYSQL_PASSWORD: password
     ports:
-      - 4306:3306
+      - 3306:3306
     volumes:
       - mysql-db:/var/lib/mysql
-      
+
   backend:
+    image: kanadome/hackathon_vol8_team21-backend:latest
     tty: true
     depends_on:
       - db
-    build:
-      context: ./
-      dockerfile: backend.Dockerfile
     ports:
       - 3000:3000
     volumes:
@@ -27,24 +24,28 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0"
 
   frontend:
-    build:
-      context: ./
-      dockerfile: frontend.Dockerfile
+    image: kanadome/hackathon_vol8_team21-frontend:latest
     volumes:
-      - ./frontend/app:/usr/src/app
-    command: 'yarn dev'
+      - ./frontend/app:/app
+    networks:
+      - app-network
     ports:
       - '4000:4000'
 
   nginx:
-    build:
-      context: ./
-      dockerfile: nginx.Dockerfile
+    image: kanadome/hackathon_vol8_team21-nginx:latest
     ports:
-      - '9000:80'
+      - '80:80'
+    networks:
+      - app-network
+    restart: always
     depends_on:
       - frontend
 
 volumes:
   mysql-db:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge
