@@ -1,14 +1,13 @@
 'use client'
-import { headers } from 'next/headers';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
 
 type Genre = {
   id: number;
   name: string;
 };
 
-const GenreSelectionPage: React.FC = () => {
+const GenreSelectionPage = () => {
   const [genreDataList, setGenreDataList] = useState<Genre[]>([]);
 
   useEffect(() => {
@@ -30,24 +29,24 @@ const GenreSelectionPage: React.FC = () => {
   }, []);
 
   return (
-    <div style={styles.body}>
-      <header style={styles.header}>
-        <h2 style={styles.headerText}>ITwords</h2>
+    <div className="min-h-screen bg-gray-100">
+      <header className="bg-blue-600 p-4">
+        <h2 className="text-white text-2xl font-bold">ITwords</h2>
       </header>
-      <div style={styles.container}>
-        <h1 style={styles.title}>ジャンルを選択</h1>
-        {genreDataList.map((genre) => (
-          <Link href={`/pages/word-question/${genre.id}`} key={genre.id} style={styles.link}>
-            <button style={styles.genreButton}>
-              {genre.name} ({genre.id})
-            </button>
-          </Link>
-        ))}
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-6 text-center">ジャンルを選択</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {genreDataList.map((genre) => (
+            <Link href={`/pages/word-list/${genre.name}`} key={genre.id} className="block">
+              <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                {genre.name}
+              </button>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
-
-// ... existing styles ...
 
 export default GenreSelectionPage;
