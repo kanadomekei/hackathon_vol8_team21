@@ -1,12 +1,14 @@
-FROM mysql:8.0
+FROM mysql:8.0-debian
 
-# 環境変数の設定
-ENV MYSQL_ROOT_PASSWORD=password
-ENV MYSQL_DATABASE=sample
-ENV MYSQL_PASSWORD=password
+RUN apt-get update && \
+    apt-get install -y locales
 
-# 必要なポートを公開
+RUN locale-gen ja_JP.UTF-8
+
+RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+
+ENV LANG=ja_JP.UTF-8
+
+ENV TZ=Asia/Tokyo
+
 EXPOSE 3306
-
-# デフォルトのコマンドを上書き
-CMD ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
