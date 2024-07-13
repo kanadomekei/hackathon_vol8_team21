@@ -23,7 +23,7 @@ type Genre = {
     return (
       <div>
         {genreDataList.map((genre) => (
-            <Link href={`/pages/question/${genre.id}`} key={genre.id} >
+            <Link href={`/pages/word-question/${genre.id}`} key={genre.id} >
           <Genre key={genre.id} genre={genre} />
           </Link>
         ))}
