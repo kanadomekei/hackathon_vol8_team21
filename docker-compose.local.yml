@@ -11,7 +11,7 @@ services:
       MYSQL_DATABASE: sample
       MYSQL_PASSWORD: password
     ports:
-      - 4306:3306
+      - 3306:3306
     volumes:
       - mysql-db:/var/lib/mysql
       
@@ -39,17 +39,17 @@ services:
     ports:
       - '4000:4000'
 
-  nginx:
-    build:
-      context: ./
-      dockerfile: infra/dockerfiles/local/nginx.Dockerfile
-    ports:
-      - '80:80'
-    networks:
-      - app-network
-    restart: always
-    depends_on:
-      - frontend
+  # nginx:
+  #   build:
+  #     context: ./
+  #     dockerfile: infra/dockerfiles/local/nginx.Dockerfile
+  #   ports:
+  #     - '80:80'
+  #   networks:
+  #     - app-network
+  #   restart: always
+  #   depends_on:
+  #     - frontend
 
 volumes:
   mysql-db:
