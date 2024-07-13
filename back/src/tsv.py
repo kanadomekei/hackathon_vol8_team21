@@ -13,8 +13,8 @@ def read_tsv(file_path):
 
 def get_unique_genre_terms(file_path):
     data = read_tsv(file_path)  
-    genre_terms = set(row[1] for row in data[1:])
-    return list(genre_terms)
+    genre_terms = {row[1] for row in data[1:]}
+    return [{"id": idx, "genre": genre} for idx, genre in enumerate(genre_terms, start=1)]
 
 def get_rows_by_genre(file_path, genre):
     data = read_tsv(file_path)
