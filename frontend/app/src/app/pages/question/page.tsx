@@ -1,34 +1,39 @@
-import Genre from '@/app/components/genre/GenreQusetion'
+'use client'
+import Genre from '@/app/components/genre/GenreQusetion';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 
 type Genre = {
-    id: number;
-    name: string;
-  };
+  id: number;
+  genre: string;
+};
 
-  const Page: React.FC = () => {
-    const genreDataList: Genre[] = [
-      { id: 1, name: 'genre 1A' },
-      { id: 2, name: 'genre 2A' },
-      { id: 3, name: 'genre 3A' },
-      { id: 4, name: 'genre 1B' },
-      { id: 5, name: 'genre 2B' },
-      { id: 6, name: 'genre 3B' },
-      { id: 7, name: 'genre 1C' },
-      { id: 8, name: 'genre 2C' },
-      { id: 9, name: 'genre 3C' }
-    ];
-  
-    return (
-      <div>
-        {genreDataList.map((genre) => (
-            <Link href={`/pages/question/${genre.id}`} key={genre.id} >
-          <Genre key={genre.id} genre={genre} />
-          </Link>
-        ))}
-      </div>
-    );
-  };
-  
-  export default Page;
+const Page: React.FC = () => {
+  const [genreDataList, setGenreDataList] = useState<Genre[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/genres');
+        const data = await response.json();
+        setGenreDataList(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {genreDataList.map((genre) => (
+        <Link href={`/pages/question/${genre.id}`} key={genre.id}>
+          <Genre genre={genre} />
+        </Link>
+      ))}
+    </div>
+  );
+};
+
+export default Page;
