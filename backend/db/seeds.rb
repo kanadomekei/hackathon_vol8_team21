@@ -6,7 +6,7 @@ end
 
 CSV.foreach("db/data.csv", headers: true) do |row|
   CombinedData.create(
-    genre_name: row['genre_name'],
+    genre_name: row['genre_term'],
     word_term: row['word_term'],
     word_definition: row['word_definition'],
     word_explanation: row['word_explanation'],
