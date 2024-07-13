@@ -16,9 +16,13 @@ def get_unique_genre_terms(file_path):
     genre_terms = {row[1] for row in data[1:]}
     return [{"id": idx, "genre": genre} for idx, genre in enumerate(genre_terms, start=1)]
 
-def get_rows_by_genre(file_path, genre):
+def get_rows_by_genre(file_path, genre, limit=None):
     data = read_tsv(file_path)
-    return [row for row in data if row[1] == genre]
+    rows = [row for row in data if row[1] == genre]
+    random.shuffle(rows)
+    if limit:
+        rows = rows[:limit]
+    return rows
 
 def generate_quiz(data, genre, num_questions):
     filtered_rows = [row for row in data if row[1] == genre]

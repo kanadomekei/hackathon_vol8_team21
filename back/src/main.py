@@ -34,10 +34,10 @@ def get_genres():
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
     
 @router.get("/data/genre/{genre}", response_model=List[dict])
-def get_data_by_genre(genre: str):
+def get_data_by_genre(genre: str, limit: int = None):
     file_path = os.path.join(os.path.dirname(__file__), "data.tsv")
     try:
-        rows = get_rows_by_genre(file_path, genre)
+        rows = get_rows_by_genre(file_path, genre, limit)
         keys = ["id", "genre_term", "word_term", "word_definition", "word_explanation", "question_content", "correct_answer", "difficulty"]
         json_data = [dict(zip(keys, row)) for row in rows]
         return json_data
