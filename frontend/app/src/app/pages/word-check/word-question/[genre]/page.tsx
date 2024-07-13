@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Question from '../../genre/question/page';
+import Question from '../../../genre/question/page';
 
 type WordQuestion = {
   id: number;
