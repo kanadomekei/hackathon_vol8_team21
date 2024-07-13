@@ -1,17 +1,21 @@
-import React from 'react'
+import React from 'react';
 
-export const Question = () => {
+type WordQuestionProps = {
+  question: {
+    id: number;
+    genre_id: number;
+    trem: string;
+    definition: string;
+    explanation: string;
+  };
+};
+
+const WordQuestion: React.FC<WordQuestionProps> = ({ question }) => {
   return (
-    <div>
-        <div>
-            <h1>genre.qestion</h1>
-        </div>
-        <div>
-            answer.1
-        </div>
+    <div className="p-4 border rounded shadow-md my-2">
+      <h2 className="text-lg font-bold">{question.trem}</h2>
     </div>
+  );
+};
 
-  )
-}
-
-export default Question
+export default WordQuestion;

@@ -17,7 +17,7 @@ export const Select = () => {
     if (select) {
       router.push('/pages/question');
     } else {
-      router.push('/pages/word-list');
+      router.push('/pages/word-check');
     }
   };
 
