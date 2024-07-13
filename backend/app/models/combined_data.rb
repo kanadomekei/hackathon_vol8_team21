@@ -1,0 +1,2 @@
+class CombinedData < ApplicationRecord
+end
