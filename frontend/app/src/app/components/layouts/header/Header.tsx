@@ -3,11 +3,10 @@ import Link from 'next/link';
 
 const Header: React.FC = () => {
   return (
-    <header className='border-b-2'>
-        <div className='mx-5 my-6'>
+    <header className="bg-blue-600 p-4">
+        <div className='mx-5 my-4'>
       <Link href="/" className="">
-        IT単語app
-
+      <h2 className="text-white text-2xl font-bold">ITwords</h2>
       </Link>
         </div>
       <nav>
