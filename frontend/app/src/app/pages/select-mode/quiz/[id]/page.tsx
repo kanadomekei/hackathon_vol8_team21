@@ -67,6 +67,7 @@ const Question: React.FC = () => {
     <div className="flex flex-col items-center justify-between">
       <div className="my-24 text-center">
         <h1 className="text-xl font-bold">{currentQuestion.question_content}</h1>
+        <h3>{currentQuestionIndex}/20</h3>
       </div>
       <div className="flex flex-col space-y-4 w-full px-4">
         {answers.map((answer, index) => (

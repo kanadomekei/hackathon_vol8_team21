@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 export const Select = () => {
   const [timer, setTimer] = useState(10);
   const [isChecked, setIsChecked] = useState(false);
-  const [select, setSelect] = useState(false);
+  const [select, setSelect] = useState(true);
   const router = useRouter();
 
   const minus = () => setTimer(prevTimer => Math.max(prevTimer - 1, 0));
@@ -27,7 +27,7 @@ export const Select = () => {
     <div className="flex flex-col items-center  pt-28 bg-gray-100 min-h-screen">
       <div className="bg-gray-300 w-80 flex flex-col items-center py-5 px-5 rounded-2xl text-center my-7">
         <div className="flex items-center space-x-2">
-          <h2>制限時間</h2>
+          <h2>回答時間</h2>
           <button onClick={minus} className="bg-gray-400 rounded-full px-3 py-1">ー</button>
           <h2>{timer}秒</h2>
           <button onClick={plus} className="bg-gray-400 rounded-full px-3 py-1">＋</button>
