@@ -45,13 +45,14 @@ const CheckResult: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-between h-screen">
       <div className="my-4 text-center">
-        <h1 className="text-2xl font-bold">Score: {score}</h1>
+        <h1 className="text-2xl font-bold">Score: {score}/20</h1>
       </div>
       <div className="w-full px-4">
         <ul className="list-none p-0">
-          {Array.from({ length: totalQuestions }, (_, index) => (
-            <li key={index} className="flex items-center justify-between border-b-2 py-2">
-              <span className="text-2xl">{getResultIcon(index + 1)}</span>
+        {[...correctAnswers, ...incorrectAnswers].map((answer, index) => (
+            <li key={answer.id} className="flex items-center justify-between border-b-2 py-2">
+              <span className="text-2xl">{getResultIcon(answer.id)}</span>
+              <span className="text-2xl">{answer.correct_answer}</span>
               <span className="text-2xl">{index + 1}</span>
             </li>
           ))}
