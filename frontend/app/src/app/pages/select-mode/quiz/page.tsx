@@ -27,6 +27,7 @@ const Page: React.FC = () => {
 
   return (
     <div>
+      <h2 className='text-2xl text-center mt-5'>ジャンルを選択する</h2>
       {genreDataList.map((genre) => (
         <Link href={`/pages/select-mode/quiz/${genre.id}`} key={genre.id}>
           <Genre genre={genre} />

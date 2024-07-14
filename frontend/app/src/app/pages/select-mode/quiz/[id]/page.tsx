@@ -23,7 +23,7 @@ const Question: React.FC = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:8080/quiz/Security/20');
+        const response = await fetch('http://localhost:8080/quiz/Security/21');
         const data: QuestionType[] = await response.json();
         setQuestions(data);
       } catch (error) {
