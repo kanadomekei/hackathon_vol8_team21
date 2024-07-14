@@ -56,41 +56,61 @@ export default function GenreWordList({ params }: Props) {
     setSearchTerm(e.target.value);
   };
 
-  if (loading) return <p className="text-center p-4">Loading...</p>;
-  if (error) return <p className="text-center p-4 text-red-500">Error: {error}</p>;
-  if (data.length === 0) return <p className="text-center p-4">No data available for this genre.</p>;
+  if (loading) return (
+    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
+
+  if (error) return (
+    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100">
+      <p className="text-center p-4 text-red-500">Error: {error}</p>
+    </div>
+  );
+
+  if (data.length === 0) return (
+    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100">
+      <p className="text-center p-4">No data available for this genre.</p>
+    </div>
+  );
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">単語リスト</h1>
-      <div className="mb-4 flex justify-end">
-        <input
-          type="text"
-          placeholder="検索..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="px-4 py-2 border rounded-lg"
-        />
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div className="p-8">
+          <h1 className="text-3xl font-bold mb-8 text-center text-indigo-800">単語リスト</h1>
+          <div className="mb-6 flex justify-end">
+            <input
+              type="text"
+              placeholder="検索..."
+              value={searchTerm}
+              onChange={handleSearch}
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr className="bg-indigo-100">
+                  <th className="w-1/2 py-3 px-4 text-left text-indigo-800 font-semibold">用語</th>
+                  <th className="w-1/2 py-3 px-4 text-left text-indigo-800 font-semibold">説明</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.map((item, index) => (
+                  <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+                    <td className="py-3 px-4 border-b">{item.word_term}</td>
+                    <td className="py-3 px-4 border-b">{item.word_explanation}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {filteredData.length === 0 && (
+            <p className="text-center p-4 text-gray-600">検索結果がありません。</p>
+          )}
+        </div>
       </div>
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="w-1/2 py-2 px-4 border-b text-left">用語</th>
-            <th className="w-1/2 py-2 px-4 border-b text-left">説明</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((item, index) => (
-            <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-              <td className="py-2 px-4 border-b">{item.word_term}</td>
-              <td className="py-2 px-4 border-b">{item.word_explanation}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {filteredData.length === 0 && (
-        <p className="text-center p-4">検索結果がありません。</p>
-      )}
     </div>
   );
 }
