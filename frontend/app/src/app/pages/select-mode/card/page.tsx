@@ -7,7 +7,7 @@ type Genre = {
   name: string;
 };
 
-const GenreSelectionPage = () => {
+const Page = () => {
   const [genreDataList, setGenreDataList] = useState<Genre[]>([]);
 
   useEffect(() => {
@@ -46,4 +46,4 @@ const GenreSelectionPage = () => {
   );
 };
 
-export default GenreSelectionPage;
+export default Page;
