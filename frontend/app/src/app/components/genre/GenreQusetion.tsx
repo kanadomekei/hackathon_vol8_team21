@@ -12,7 +12,7 @@ type GenreProps = {
 
 const Genre: React.FC<GenreProps> = ({ genre }) => {
   return (
-    <div className='transition-transform transform hover:scale-105 bg-gray-100 hover:bg-gray-300 py-16 border-2 border-black text-center shadow-inner m-8'>
+    <div className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-4 px-4 border border-gray-400 rounded shadow">
       <p className='text-xl'>{genre.genre}</p>
     </div>
   );

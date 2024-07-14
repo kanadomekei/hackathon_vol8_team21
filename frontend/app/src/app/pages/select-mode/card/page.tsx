@@ -31,8 +31,8 @@ const GenreSelectionPage = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-6 text-center mt-3">ジャンルを選択</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3">
+        <h1 className="text-3xl font-bold mb-6 text-center  bg-gray-100">ジャンルを選択</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {genreDataList.map((genre) => (
             <Link href={`/pages/select-mode/card/${genre.name}`} key={genre.id} className="block">
             <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-4 px-4 border border-gray-400 rounded shadow">
