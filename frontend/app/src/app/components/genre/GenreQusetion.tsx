@@ -12,8 +12,8 @@ type GenreProps = {
 
 const Genre: React.FC<GenreProps> = ({ genre }) => {
   return (
-    <div className='bg-gray-200 hover:bg-gray-300 py-8 border-t-2 border-black text-center'>
-      <p>{genre.genre}</p>
+    <div className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-4 px-4 border border-gray-400 rounded shadow">
+      <p className='text-xl'>{genre.genre}</p>
     </div>
   );
 };

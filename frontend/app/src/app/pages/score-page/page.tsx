@@ -43,27 +43,32 @@ const CheckResult: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between h-screen">
-      <div className="my-4 text-center">
-        <h1 className="text-2xl font-bold">Score: {score}</h1>
-      </div>
-      <div className="w-full px-4">
-        <ul className="list-none p-0">
-          {Array.from({ length: totalQuestions }, (_, index) => (
-            <li key={index} className="flex items-center justify-between border-b-2 py-2">
-              <span className="text-2xl">{getResultIcon(index + 1)}</span>
-              <span className="text-2xl">{index + 1}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="my-4">
-        <button
-          onClick={goHome}
-          className="bg-gray-300 rounded-full py-2 px-4 text-center text-lg"
-        >
-          ホームへ
-        </button>
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div className="p-8">
+          <div className="mb-6 text-center">
+            <h1 className="text-3xl font-bold text-indigo-800">Score: {score}/20</h1>
+          </div>
+          <div className="mb-6">
+            <ul className="list-none p-0 space-y-2">
+              {[...correctAnswers, ...incorrectAnswers].map((answer, index) => (
+                <li key={answer.id} className="flex items-center justify-between py-2 border-b border-gray-200">
+                  <span className="text-2xl">{getResultIcon(answer.id)}</span>
+                  <span className="text-lg text-gray-800">{answer.correct_answer}</span>
+                  <span className="text-lg text-gray-600">{index + 1}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="text-center">
+            <button
+              onClick={goHome}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+            >
+              ホームへ
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,31 +1,28 @@
 'use client'
-import { useEffect, useState } from 'react';
+import Genre from '@/app/components/genre/GenreQusetion';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 type Genre = {
   id: number;
-  name: string;
+  genre: string;
 };
 
-const GenreSelectionPage = () => {
+const Page: React.FC = () => {
   const [genreDataList, setGenreDataList] = useState<Genre[]>([]);
 
   useEffect(() => {
-    const fetchGenres = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch('http://localhost:8080/genres');
         const data = await response.json();
-        const formattedData = data.map((item: any) => ({
-          id: item.id,
-          name: item.genre,
-        }));
-        setGenreDataList(formattedData);
+        setGenreDataList(data);
       } catch (error) {
-        console.error('Error fetching genres:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
-    fetchGenres();
+    fetchData();
   }, []);
 
   return (
@@ -34,9 +31,9 @@ const GenreSelectionPage = () => {
         <h1 className="text-3xl font-bold mb-8 text-center text-indigo-800">ジャンルを選択</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {genreDataList.map((genre) => (
-            <Link href={`/pages/word-list/${genre.name}`} key={genre.id} className="block">
+            <Link href={`/pages/select-mode/quiz/${genre.id}`} key={genre.id} className="block">
               <button className="w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                {genre.name}
+                {genre.genre}
               </button>
             </Link>
           ))}
@@ -46,4 +43,4 @@ const GenreSelectionPage = () => {
   );
 };
 
-export default GenreSelectionPage;
+export default Page;
