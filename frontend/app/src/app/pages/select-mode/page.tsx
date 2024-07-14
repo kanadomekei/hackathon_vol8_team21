@@ -24,8 +24,8 @@ export const Select = () => {
   
 
   return (
-    <div className="flex flex-col items-center justify-center pt-3 bg-gray-100 min-h-screen">
-      <div className="bg-gray-300 w-80 flex flex-col items-center py-5 px-5 rounded-2xl text-center space-y-4">
+    <div className="flex flex-col items-center  pt-28 bg-gray-100 min-h-screen">
+      <div className="bg-gray-300 w-80 flex flex-col items-center py-5 px-5 rounded-2xl text-center my-7">
         <div className="flex items-center space-x-2">
           <h2>制限時間</h2>
           <button onClick={minus} className="bg-gray-400 rounded-full px-3 py-1">ー</button>
@@ -43,7 +43,7 @@ export const Select = () => {
           <span className={select ? 'bg-gray-400 py-2 rounded-xl px-4' : 'bg-gray-300 py-2 rounded-xl px-4'}>カード</span>
         </span>
       </div>
-      <div className='bg-gray-300 py-2 px-2 my-4 rounded-xl'>
+      <div className='bg-gray-300 py-2 px-2 my-12 rounded-xl'>
       <button onClick={handleStart} className="bg-gray-300 py-2 px-2 my-2 rounded-xl">はじめる</button>
       </div>
     </div>
