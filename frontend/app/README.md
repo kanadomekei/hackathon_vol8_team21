@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📚 ITWords - IT用語WEBアプリケーション
 
-## Getting Started
+## 概要
+**ITWords**は、IT用語の学習をサポートするWEBアプリケーションです。ユーザーがIT用語を確認し、クイズを通じて知識をテストできるよう設計されています。また、カード形式のクイズ機能も提供しています。
 
-First, run the development server:
+## 🗓 開催日
+- **2024年7月13日 ~ 2024年7月14日**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 主な機能
+1. **📝 用語確認**: IT用語の詳細情報を確認できます。
+2. **❓ クイズ**: IT用語に関するクイズで知識をテストします。
+3. **🎴 カード形式のクイズ**: カードを使ったインタラクティブなクイズ機能です。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 使用技術
+- **フロントエンド**: TypeScript, React
+- **バックエンド**: Python, Ruby on Rails
+- **データベース**: MySQL
+- **インフラ**: Docker, AWS, Git, Terraform, Ansible
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 挑戦したこと
+1. **ユーザーが使いやすいUIの実現**: ユーザビリティを重視し、直感的で使いやすいインターフェースを設計しました。
+2. **AWSでのデプロイ**: アプリケーションのデプロイをAWSで行い、スケーラビリティと信頼性の高いインフラストラクチャを構築しました。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🚀 インストールとセットアップ
+以下の手順でITWordsをローカル環境にインストールできます。
 
-## Learn More
+1. リポジトリをクローンします。
+    ```bash
+    git clone https://github.com/your-repository/ITWords.git
+    cd ITWords
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2. 必要な依存関係をインストールします。
+    ```bash
+    npm install  # フロントエンドの依存関係
+    bundle install  # バックエンドの依存関係
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. データベースを設定します。
+    ```bash
+    rails db:create
+    rails db:migrate
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4. アプリケーションを起動します。
+    ```bash
+    npm start  # フロントエンド
+    rails server  # バックエンド
+    ```
 
-## Deploy on Vercel
+## 使用方法
+1. ブラウザでアプリケーションにアクセスします。
+2. 用語確認機能を使ってIT用語を調べます。
+3. クイズ機能を利用して知識をテストします。
+4. カード形式のクイズを楽しみながら学習を深めます。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 貢献
+貢献を歓迎します。バグ報告、機能提案、プルリクエストをお待ちしています。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 📜 ライセンス
+このプロジェクトはMITライセンスの下で公開されています。詳細はLICENSEファイルを参照してください。
+
+---
+
+ご不明な点がございましたら、お気軽にお問い合わせください。
